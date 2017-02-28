@@ -7,6 +7,9 @@
             "email": "samrat.mazumder@softwaysolutions.com"
         }
     ],
+    "require": {
+        "aws/aws-sdk-php": "3.22.5"
+    },
     "minimum-stability": "dev",
     "require": {}
 }
