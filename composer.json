@@ -1,15 +1,12 @@
 {
-    "name": "samrat/poc_s3bucket",
-    "description": "Proof of concept for s3 bucket usage for php 5.3",
-    "type": "php poc",
-    "require": {
-        "aws/aws-sdk-php": "3.22.5"
-    },
-    "license": "MIT",
+    "name": "samrat/ss3",
+    "description": "poc for s3 connection from php",
     "authors": [
         {
-            "name": "Samrat",
+            "name": "Samrat Mazumder",
             "email": "samrat.mazumder@softwaysolutions.com"
         }
-    ]
+    ],
+    "minimum-stability": "dev",
+    "require": {}
 }
