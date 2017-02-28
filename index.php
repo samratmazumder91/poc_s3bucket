@@ -1,8 +1,8 @@
 <?php namespace SS3;
 
 require 'vendor/autoload.php';
-error_reporting(-1);
-ini_set('display_errors', 'On');
+// error_reporting(-1);
+// ini_set('display_errors', 'On');
 use Aws\S3\S3Client;
 use Aws\S3\Transfer;
 
@@ -188,16 +188,20 @@ Class PocSThree {
 
 }
 
-$options = array(
-	'version'     => 'latest',
-	'region'      => 'us-east-1',
-	'bucket_name' => '',
-	'credentials' => array(
-		'key' => '',
-		'secret' => ''
-	)
-);
+
+/**
+ * use the following in your application where you need
+ */
+// $options = array(
+// 	'version'     => 'latest',
+// 	'region'      => 'us-east-1',
+// 	'bucket_name' => '',
+// 	'credentials' => array(
+// 		'key' => '',
+// 		'secret' => ''
+// 	)
+// );
 
 
-$poc = new PocSThree($options);
+// $poc = new PocSThree($options);
 
