@@ -1,15 +1,13 @@
 {
     "name": "samrat/ss3",
-    "description": "poc for s3 connection from php",
+    "description": "php package to simplify s3 interaction",
+    "require": {
+        "aws/aws-sdk-php": "^3.23"
+    },
     "authors": [
         {
             "name": "Samrat Mazumder",
             "email": "samrat.mazumder@softwaysolutions.com"
         }
-    ],
-    "require": {
-        "aws/aws-sdk-php": "3.22.5"
-    },
-    "minimum-stability": "dev",
-    "require": {}
+    ]
 }
