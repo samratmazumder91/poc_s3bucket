@@ -11,8 +11,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-          "SS3": "index.php"
+        "psr-4": {
+          "SS3//": "/"
         }
     }
 }
