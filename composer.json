@@ -9,5 +9,10 @@
             "name": "Samrat Mazumder",
             "email": "samrat.mazumder@softwaysolutions.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": {
+          "SS3": "index.php"
+        }
+    }
 }
