@@ -85,7 +85,9 @@ Class PocSThree {
 	}
 
 	/**
-	 * 
+	 * to create a new bucket
+	 	$bucket_name = bucket name
+	 	$acl = access control list. e.g. 'private|public-read|public-read-write|authenticated-read'
 	 */
 	public function createBucket($bucket_name, $acl = ''){
 		if($acl == ''){
