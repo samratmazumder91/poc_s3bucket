@@ -139,8 +139,12 @@ Class PocSThree {
 	 	$bucket_name = destination bucket name
 	 	$source_url = url from which image/file is to be downloaded
 	 	$key = destination file name
+	 	$folder = folder structure inside which you want the image to be place
+	 	E.g. $folder = test/testing/  if it is to be placed inside testing folder which is inside test folder
+	 	Note: Keep it blank if you need it to store in the bucket itself
+	 	also end it with a /
 	 */
-	public function putInBucketFromUrl($bucket_name, $source_url, $key){
+	public function putInBucketFromUrl($bucket_name, $source_url, $key, $folder){
 
 		$WWW_ROOT = '/var/www/flat_public/app/webroot/';
 		$local_path = $WWW_ROOT.'tmp_folder/'.$key;
@@ -150,7 +154,7 @@ Class PocSThree {
 			return $this->S3Client->putObject(array(
 				'Bucket' => $bucket_name,
 				'SourceFile' => $local_path,
-				'Key' => $key
+				'Key' => $folder.$key
 			));
 		}
 
