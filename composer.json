@@ -1,5 +1,5 @@
 {
-    "name": "samrat/ss3",
+    "name": "samrat/poc_s3bucket",
     "description": "php package to simplify s3 interaction using php >= 5.3",
     "require": {
         "aws/aws-sdk-php": "^2.8",
@@ -14,6 +14,7 @@
     "autoload": {
         "psr-4": {
           "SS3\\": "/"
-        }
+        },
+        "files": ["index.php"]
     }
 }

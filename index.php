@@ -4,7 +4,7 @@ namespace SS3;
 // error_reporting(-1);
 // ini_set('display_errors', 'On');
 
-require_once 'vendor/autoload.php';
+// require_once 'vendor/autoload.php';
 use Aws\Common\Aws;
 use Aws\S3\Transfer;
 
@@ -212,4 +212,5 @@ class PocSThree {
 // );
 
 
-$poc = new PocSThree($options);
+// $poc = new PocSThree($options);
+// print_r($poc);
