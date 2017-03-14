@@ -2,7 +2,8 @@
     "name": "samrat/ss3",
     "description": "php package to simplify s3 interaction using php >= 5.3",
     "require": {
-        "aws/aws-sdk-php": "^2.8"
+        "aws/aws-sdk-php": "^2.8",
+        "php": ">=5.3"
     },
     "authors": [
         {
