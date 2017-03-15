@@ -4,7 +4,7 @@ namespace SS3;
 // error_reporting(-1);
 // ini_set('display_errors', 'On');
 
-// require_once 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 use Aws\Common\Aws;
 use Aws\S3\Transfer;
 
@@ -12,8 +12,8 @@ class PocSThree {
 
 	public function __construct($options = array()){
 		$this->options = $options;
-		$this->aws = Aws::factory('config/aws/config.php');
-    	$this->s3Clinet = $this->aws->get('s3');
+		$this->aws = Aws::factory($options);
+    	$this->S3Client = $this->aws->get('s3');
 	}
 
 	/**
@@ -213,4 +213,5 @@ class PocSThree {
 
 
 // $poc = new PocSThree($options);
-// print_r($poc);
+// echo "<pre>";
+// print_r($poc->listS3Buckets());
