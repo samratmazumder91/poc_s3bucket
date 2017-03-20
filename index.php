@@ -218,6 +218,36 @@ class PocSThree {
 		));
 	}
 
+	/**
+	 * to get s3 object information
+	 	$bucket_name = name of the bucket
+	 	$key = name/path(after the bucket name) of the file
+	 */
+	public function getObject($bucket_name, $key){
+		if($bucket_name == '' || $key == ''){
+			return false;
+		}
+
+		return $this->S3Client->getCommand('GetObject',array(
+			'Bucket' => $bucket_name,
+    		'Key'    => $key
+		));
+	}
+
+	/**
+	 * to get the signed url needed incase of private files
+	 	$bucket_name = name of the bucket
+	 	$key = name/path(after the bucket name) of the file
+	 */
+	public function getSignedUrl($bucket_name, $key){
+		if($bucket_name == '' || $key == ''){
+			return false;
+		}
+
+		$cmd = $this->getObject($bucket_name, $key);
+		return $cmd->createPresignedUrl('+3 minutes');
+	}
+
 }
 
 
