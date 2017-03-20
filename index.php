@@ -26,14 +26,8 @@ class PocSThree {
 	/**
 	 * list contents of a bucket
 	 */
-	public function getBucketObjects($bucket_name = ''){
-		if(empty($bucket_name) && empty($this->options['bucket_name'])) {
-			return false;
-		}
-
-		$bucket_name = !empty($bucket_name)? $bucket_name : $this->options['bucket_name'];
-
-		if(empty($bucket_name)) {
+	public function getBucketObjects($bucket_name){
+		if($bucket_name == ''){
 			return false;
 		}
 
@@ -70,6 +64,9 @@ class PocSThree {
 	 	$dkey = name of the file to be copied (can have a name of your choice)
 	 */
 	public function copyBucketToBucket($source, $skey, $destination, $dkey){
+		if($source == '' || $skey == '' || $destination == '' || $dkey == ''){
+			return false;
+		}
 
 		return $this->S3Client->copyObject(array(
 			'Bucket' => $destination,
@@ -82,6 +79,19 @@ class PocSThree {
 	 * to delete a bucket
 	 */
 	public function deleteBucket($bucket_name){
+		if($bucket_name == ''){
+			return false;
+		}
+
+		//list the bucket contents
+		$bucket_contents = $this->getBucketObjects($bucket_name);
+
+		if(!empty($bucket_contents)){
+			foreach ($bucket_contents as $value) {
+				$this->deleteObject($bucket_name, $value);
+			}
+		}
+
 		return $this->S3Client->deleteBucket(array(
 			'Bucket' => $bucket_name
 		));
@@ -93,6 +103,10 @@ class PocSThree {
 	 	$acl = access control list. e.g. 'private|public-read|public-read-write|authenticated-read'
 	 */
 	public function createBucket($bucket_name, $acl = ''){
+		if($bucket_name == ''){
+			return false;
+		}
+
 		if($acl == ''){
 			$acl = 'public-read';
 		}
@@ -109,6 +123,10 @@ class PocSThree {
 	 	$key = the name of the object to be deleted
 	 */
 	public function deleteObject($bucket_name, $key){
+		if($bucket_name == '' || $key == ''){
+			return false;
+		}
+
 		return $this->S3Client->deleteObject(array(
 			'Bucket' => $bucket_name,
 			'Key' => $key
@@ -126,15 +144,9 @@ class PocSThree {
 			return false;
 		}
 
-		//create the required array
-		$toDelete = array();
 		foreach ($objects as $value) {
-			$toDelete['Objects'][] = array('Key' => $value);			
+			$this->deleteObject($bucket_name, $value);
 		}
-		return $this->S3Client->deleteObjects(array(
-			'Bucket' => $bucket_name,
-			'Delete' => $toDelete
-		));
 	}
 
 	/**
@@ -149,6 +161,9 @@ class PocSThree {
 	 	also end it with a /
 	 */
 	public function putInBucketFromUrl($bucket_name, $source_url, $local_path, $key, $folder){
+		if($bucket_name == '' || $source_url == '' || $local_path == '' || $key == '' || $folder == ''){
+			return false;
+		}
 
 		$local_path = $local_path.$key;
 		$local_img = file_put_contents($local_path, file_get_contents($source_url));
@@ -170,6 +185,10 @@ class PocSThree {
 	 	$folder_name = desired folder name
 	 */
 	public function createFolder($bucket_name, $folder_name){
+		if($bucket_name == '' || $folder_name == ''){
+			return false;
+		}
+
 		return $this->S3Client->putObject(array(
 				'Bucket' => $bucket_name,
 				'Body' => "",
@@ -188,6 +207,10 @@ class PocSThree {
 	 	E.g. : test/sam.jpg
 	 */
 	public function uploadFileToBucket($bucket_name, $source_file, $key){
+		if($bucket_name == '' || $source_file == '' || $key == ''){
+			return false;
+		}
+
 		return $this->S3Client->putObject(array(
 			'Bucket' => $bucket_name,
 			'SourceFile' => $source_file,
