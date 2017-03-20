@@ -143,14 +143,14 @@ class PocSThree {
 	 	$source_url = url from which image/file is to be downloaded
 	 	$key = destination file name
 	 	$folder = folder structure inside which you want the image to be place
+	 	$local_path = path of folder inside your application which will be used to store temporary files. Always end the path with a '/'
 	 	E.g. $folder = test/testing/  if it is to be placed inside testing folder which is inside test folder
 	 	Note: Keep it blank if you need it to store in the bucket itself
 	 	also end it with a /
 	 */
-	public function putInBucketFromUrl($bucket_name, $source_url, $key, $folder){
+	public function putInBucketFromUrl($bucket_name, $source_url, $local_path, $key, $folder){
 
-		$WWW_ROOT = '/var/www/flat_public/app/webroot/';
-		$local_path = $WWW_ROOT.'tmp_folder/'.$key;
+		$local_path = $local_path.$key;
 		$local_img = file_put_contents($local_path, file_get_contents($source_url));
 
 		if($local_img){
