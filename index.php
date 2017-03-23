@@ -25,8 +25,10 @@ class PocSThree {
 
 	/**
 	 * list contents of a bucket
+	 	$bucket_name = name of the bucket
+	 	$prefix = the folder path of which contents you wanna display
 	 */
-	public function getBucketObjects($bucket_name){
+	public function getBucketObjects($bucket_name, $prefix = ''){
 		if($bucket_name == ''){
 			return false;
 		}
@@ -35,7 +37,8 @@ class PocSThree {
 
 		$iterator = $this->S3Client->getIterator('ListObjects',
 			array(
-				'Bucket' => $bucket_name
+				'Bucket' => $bucket_name,
+				'Prefix' => $prefix
 			)
 		);
 
