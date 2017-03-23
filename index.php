@@ -251,6 +251,23 @@ class PocSThree {
 		return $cmd->createPresignedUrl('+3 minutes');
 	}
 
+	/**
+	 * to store s3 object to local
+	 	$bucket_name = name of the bucket
+	 	$key = name/path(after the bucket name) of the file
+	 	$save_to = path where to store
+	 */
+	public function storeObject($bucket_name, $key, $save_to){
+		if($bucket_name == '' || $key == '' || $save_to == ''){
+			return false;
+		}
+
+		return $this->S3Client->getObject(array(
+			'Bucket' => $bucket_name,
+    		'Key'    => $key,
+    		'SaveAs' => $save_to
+		));
+	}
 }
 
 
