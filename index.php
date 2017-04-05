@@ -268,6 +268,71 @@ class PocSThree {
     		'SaveAs' => $save_to
 		));
 	}
+
+	/**
+	 * to rename an object
+	 $bucket_name = name of the bucket
+	 $old_name = existing name of the file
+	 $new_name = desired name of the file
+	 Note: Please include the file path if it's nested
+
+	 No direct way to rename a file was found hence, it will be first copied and then the old file will be deleted
+	 */
+	public function renameObject($bucket_name,$old_name, $new_name){
+		if($bucket_name == '' || $old_name == '' || $new_name == ''){
+			return false;
+		}
+
+		$renamed = $this->S3Client->copyObject(array(
+			'Bucket'		=> $bucket_name,
+			'Key'			=> $new_name,
+			'CopySource'	=> "{$bucket_name}/{$old_name}",
+		));
+
+		if($renamed){ //now delete the existing image
+			$this->deleteObject($bucket_name, $old_name);
+		}
+
+	}
+
+	/**
+	 * to delete an entire folder irrespective of its contents
+	 */
+	public function deleteFolder($bucket_name, $folder){
+		if($bucket_name == '' || $folder == ''){
+			return false;
+		}
+
+		$folder_contents = array_reverse($this->getBucketObjects($bucket_name, $folder));
+		
+		if(!empty($folder_contents)){
+			foreach ($folder_contents as $value) {
+				$this->deleteObject($bucket_name, $value);
+			}
+		}
+	}
+
+	/**
+	 * to check if an object exists or not
+	 $bucket_name = name of the bucket
+	 $file_name = name of the file/object (provide the entire path if its nested)
+
+	 Note : it wil return either true or false
+	 */
+	public function doesObjectExist($bucket_name, $file_name){
+		return $this->S3Client->doesObjectExist($bucket_name,$file_name);
+	}
+
+	/**
+	 * to get the file size in bytes
+	 $bucket_name = name of the bucket
+	 $file_name = name of the file/object (provide the entire path if its nested)
+	 */
+	public function fileSize($bucket_name, $file_name){
+		$info = $this->S3Client->headObject(array('Bucket' => $bucket_name,'Key' => $file_name));
+		return $info->get('ContentLength');
+	}
+
 }
 
 
