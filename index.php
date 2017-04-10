@@ -337,7 +337,9 @@ class PocSThree {
 	 * to check if a folder exists or not
 	 $bucket_name = the name of the vucket in which the folder is to be searched
 	 $path = path after the bucket where the folder is to be searched. If its in the root then please pass empty string i.e. ''
-	 $folder_name = name of the folder to be searched
+	 eg: if the folder is inside app/tmp/ then path = app/tmp
+	 $folder_name = name of the folder to be searched along with the path
+	 eg: if folder name is test and is inside app/tmp then folder_name = app/tmp/test
 	 */
 	public function doesFolderExist($bucket_name, $path = '', $folder_name){
 		if($bucket_name == '' || $folder_name == ''){
@@ -345,9 +347,9 @@ class PocSThree {
 		}
 
 		$contents = $this->getBucketObjects($bucket_name, $path);
-
+		$folder_name = preg_replace('/\//', '\/', $folder_name);
 		foreach ($contents as $value) {
-			if($value == $folder_name.'/'){ // here '/' is being used as when listed a folder ends with '/';
+			if(preg_match('/'.$folder_name.'/', $value)){ // here '/' is being used as when listed a folder ends with '/';
 				return true;
 			}
 		}
