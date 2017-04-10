@@ -333,6 +333,27 @@ class PocSThree {
 		return $info->get('ContentLength');
 	}
 
+	/**
+	 * to check if a folder exists or not
+	 $bucket_name = the name of the vucket in which the folder is to be searched
+	 $path = path after the bucket where the folder is to be searched. If its in the root then please pass empty string i.e. ''
+	 $folder_name = name of the folder to be searched
+	 */
+	public function doesFolderExist($bucket_name, $path = '', $folder_name){
+		if($bucket_name == '' || $folder_name == ''){
+			return false;
+		}
+
+		$contents = $this->getBucketObjects($bucket_name, $path);
+
+		foreach ($contents as $value) {
+			if($value == $folder_name.'/'){ // here '/' is being used as when listed a folder ends with '/';
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
 
 
