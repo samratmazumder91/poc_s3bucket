@@ -4,7 +4,8 @@ namespace SS3;
 // error_reporting(-1);
 // ini_set('display_errors', 'On');
 
-require_once 'vendor/autoload.php';
+$vendorDir = realpath(__DIR__ . '/../..');
+require_once $vendorDir . '/autoload.php';
 use Aws\Common\Aws;
 use Aws\S3\Transfer;
 
