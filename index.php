@@ -8,13 +8,52 @@ $vendorDir = realpath(__DIR__ . '/../..');
 require_once $vendorDir . '/autoload.php';
 use Aws\Common\Aws;
 use Aws\S3\Transfer;
+use Aws\Sns\SnsClient;
 
 class PocSThree {
 
 	public function __construct($options = array()){
 		$this->options = $options;
+
+		//S3 Object
 		$this->aws = Aws::factory($options);
+
+		//SNS Object
+		$this->sns = SnsClient::factory($options);
+
+		//Attributes for SMS
+		$this->msgattributes = [
+				'AWS.SNS.SMS.SenderID' => [
+				'DataType' => 'String',
+				'StringValue' => 'Bgd',
+			],
+				'AWS.SNS.SMS.SMSType' => [
+				'DataType' => 'String',
+				'StringValue' => 'Transactional',
+			]
+		];
+		
     	$this->S3Client = $this->aws->get('s3');
+	}
+
+	/**
+	* to send SMS
+		$msg = (STRING) the message to be sent
+		$number = (STRING) mobile number along with country code
+	*/	
+	public function sendSMS($msg, $number, $msg_type = "Transactional"){
+
+		if($msg_type == "Promotional"){
+			$this->msgattributes['AWS.SNS.SMS.SMSType']['StringValue'] = $msg_type;
+		}
+
+		$payload = array(
+			'Message' => $msg,
+			'PhoneNumber' => $number,
+			'MessageAttributes' => $this->msgattributes
+		);
+
+		return $this->sns->publish($payload);
 	}
 
 	/**

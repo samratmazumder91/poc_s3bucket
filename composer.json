@@ -2,8 +2,8 @@
     "name": "samrat/poc_s3bucket",
     "description": "php package to simplify s3 interaction using php >= 5.3",
     "require": {
-        "aws/aws-sdk-php": "^2.8",
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "aws/aws-sdk-php": "^3.52"
     },
     "authors": [
         {
