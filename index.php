@@ -6,17 +6,18 @@ namespace SS3;
 
 $vendorDir = realpath(__DIR__ . '/../..');
 require_once $vendorDir . '/autoload.php';
-use Aws\Common\Aws;
 use Aws\S3\Transfer;
 use Aws\Sns\SnsClient;
+use Aws\AwsClient;
+use Aws\S3\S3Client;
 
 class PocSThree {
 
 	public function __construct($options = array()){
 		$this->options = $options;
 
-		//S3 Object
-		$this->aws = Aws::factory($options);
+		//AWS Object
+		//$this->aws = Aws::factory($options);
 
 		//SNS Object
 		$this->sns = SnsClient::factory($options);
@@ -33,13 +34,15 @@ class PocSThree {
 			]
 		];
 		
-    	$this->S3Client = $this->aws->get('s3');
+		//S3 Object
+    	$this->S3Client = new S3Client($options);
 	}
 
 	/**
 	* to send SMS
 		$msg = (STRING) the message to be sent
 		$number = (STRING) mobile number along with country code
+		$msg_type = (STRING) dictates type of msg, i.e. Transactional or Promotional, by default its Transactional
 	*/	
 	public function sendSMS($msg, $number, $msg_type = "Transactional"){
 
@@ -287,8 +290,14 @@ class PocSThree {
 			return false;
 		}
 
-		$cmd = $this->getObject($bucket_name, $key);
-		return $cmd->createPresignedUrl('+3 minutes');
+		//$cmd = $this->getObject($bucket_name, $key);
+		//return $cmd->createPresignedUrl('+3 minutes');
+		$command = $this->S3Client->getCommand('GetObject', array(
+            'Bucket'      => $bucket_name,
+            'Key'         => $key
+        ));
+
+		return $this->S3Client->createPresignedRequest($command, "+3 minutes");
 	}
 
 	/**
