@@ -52,7 +52,7 @@ class PocSThree {
 
 		$payload = array(
 			'Message' => $msg,
-			'PhoneNumber' => $number,
+			'PhoneNumber' => str_replace("-","",$number),
 			'MessageAttributes' => $this->msgattributes
 		);
 
