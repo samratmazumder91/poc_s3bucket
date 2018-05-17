@@ -297,7 +297,8 @@ class PocSThree {
             'Key'         => $key
         ));
 
-		return $this->S3Client->createPresignedRequest($command, "+3 minutes");
+		$object = $this->S3Client->createPresignedRequest($command, "+3 minutes")->getUri();
+		return (string)$object;
 	}
 
 	/**
