@@ -3,7 +3,7 @@
     "description": "php package to simplify s3 interaction using php >= 5.3",
     "require": {
         "php": ">=5.3",
-        "aws/aws-sdk-php": "^2.8"
+        "aws/aws-sdk-php": "3.56.*"
     },
     "authors": [
         {
